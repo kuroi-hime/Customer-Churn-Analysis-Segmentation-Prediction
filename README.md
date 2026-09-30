@@ -222,6 +222,44 @@ This dataset contains numerical representations of the categorical, boolean, and
 
 ---
 
+## 2. Client Segmentation and Clustering
+
+This phase focuses on preparing the cleaned dataset for customer segmentation and determining an appropriate number of clusters.
+
+### 2.1. Data Loading
+
+The cleaned dataset was loaded and prepared as the input for the clustering analysis. Since the data had already been cleaned and transformed into numerical features, it was directly used for the clustering preparation stage.
+
+### 2.2. Determining the Number of Clusters
+
+The **Elbow Method** was applied to identify a suitable number of clusters (`n_clusters`) for the K-Means algorithm.
+
+The method evaluates the **inertia** for different values of `k`. Inertia measures the sum of squared distances between each observation and the centroid of its assigned cluster.
+
+The value of `k` is selected by looking for an **elbow point**, where increasing the number of clusters produces significantly smaller improvements in inertia.
+
+```python
+inertias = []
+
+for k in range(2, 6):
+    kmeans = KMeans(
+        n_clusters=k,
+        random_state=42,
+        n_init=10
+    )
+
+    kmeans.fit(X)
+    inertias.append(kmeans.inertia_)
+```
+
+The resulting Elbow curve will be used to determine the number of clusters to apply in the next stage of the customer segmentation process.
+
+![Elbow Method](images/elbow_method.png)
+
+The Elbow Method indicated that 4 clusters (k = 4) provide a suitable balance between reducing inertia and avoiding an unnecessarily large number of clusters.
+
+---
+
 # Technologies Used
 
 The analysis and preprocessing are implemented in Python using:
